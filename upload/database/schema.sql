@@ -1,0 +1,53 @@
+
+CREATE TABLE IF NOT EXISTS admin_users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  crop_type VARCHAR(100) NOT NULL,
+  short_description TEXT,
+  description TEXT,
+  season VARCHAR(100),
+  region VARCHAR(100),
+  germination_rate VARCHAR(50),
+  packaging VARCHAR(100),
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS inquiries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  company_name VARCHAR(150),
+  phone VARCHAR(50),
+  email VARCHAR(100),
+  message TEXT,
+  status VARCHAR(50) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS contacts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  email VARCHAR(100),
+  subject VARCHAR(150),
+  message TEXT,
+  status VARCHAR(50) DEFAULT 'unread',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Default admin: admin@example.com / ChangeThisPassword123!
+INSERT INTO admin_users (email, password)
+SELECT 'admin@example.com', '$2y$10$0VbPw4H6P6W4qKQpkW2gKu9wkdr3xvBfYQH2A5KFlvGUVoc8H8.2a'
+WHERE NOT EXISTS (SELECT 1 FROM admin_users WHERE email = 'admin@example.com');
